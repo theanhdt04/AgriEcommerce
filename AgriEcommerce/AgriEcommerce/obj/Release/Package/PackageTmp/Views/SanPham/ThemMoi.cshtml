@@ -1,0 +1,183 @@
+﻿@model AgriEcommerce.Models.SanPham
+
+@{
+    ViewBag.Title = "Thêm mới sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin sản phẩm</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Thêm mới sản phẩm</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" style="width:100%">
+    <h4 style="color: black">Nhập thông tin sản phẩm</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Mã sản phẩm <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.MaSanPham, new { htmlAttributes = new { @class = "form-control", placeholder = "Mã sản phẩm...", maxlength = "20" } })
+
+            @Html.ValidationMessageFor(model => model.MaSanPham, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Tên sản phẩm <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên sản phẩm...", maxlength = "150" } })
+
+            @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Giá <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control", placeholder = "Giá...(đ)", type = "number", min = "0", max = "1000000000" } })
+
+            @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger small" })
+        </div>
+
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Số lượng <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control", placeholder = "Số lượng...", type = "number", min = "0", max = "100000" } })
+
+            @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Danh mục <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.MaDanhMuc, (SelectList)ViewBag.DanhMuc, "--- Chọn danh mục ---", new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.MaDanhMuc, "", new { @class = "text-danger small" })
+        </div>
+
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Đơn vị tính <span class="text-danger">(*)</span>:
+        </label>
+
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.MaDonViTinh, (SelectList)ViewBag.DonViTinh, "--- Chọn đơn vị ---", new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.MaDonViTinh, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Hình ảnh:
+        </label>
+
+        <div class="col-md-6">
+            <input type="file" name="fUpload" id="fUpload" />
+
+            <span id="errorImage" class="text-danger small"></span>
+
+            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+
+    <div class="form-group row mb-3">
+        <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+            Mô tả:
+        </label>
+
+        <div class="col-md-9">
+            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = 5, placeholder = "Mô tả sản phẩm...", maxlength = "2000" })
+
+            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger small" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            @Html.ActionLink("Trở lại", "danhsach", null,
+                new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var fileInput = document.getElementById("fUpload");
+        if (!fileInput) return;
+
+        var error = document.getElementById("errorImage");
+        var container = fileInput.parentElement;
+
+        container.style.display = "flex";
+        container.style.alignItems = "center";
+        container.style.gap = "15px";
+
+        var img = document.createElement("img");
+        img.className = "img-thumbnail";
+        img.style.width = "180px";
+        img.style.height = "180px";
+        img.style.display = "none";
+
+        container.insertBefore(img, fileInput);
+
+        fileInput.addEventListener("change", function () {
+
+            var file = this.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+                error.innerText = "Vui lòng chọn file ảnh!";
+                this.value = "";
+                img.style.display = "none";
+                return;
+            }
+            else {
+                error.innerText = "";
+            }
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                img.style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+    });
+</script>

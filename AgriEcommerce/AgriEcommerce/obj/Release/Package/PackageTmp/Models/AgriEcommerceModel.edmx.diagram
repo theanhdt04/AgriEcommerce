@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e9ddfb39ad9645b5bd9309dcd46894b6" Name="Diagram1">
+        <EntityTypeShape EntityType="AgriEcommerceModel.ChuDeTinTuc" Width="1.5" PointX="8" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.DanhMuc" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.DonHang" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.DonHangChiTiet" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.DonViTinh" Width="1.5" PointX="8" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.GioHang" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.GioHangChiTiet" Width="1.5" PointX="7.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.NguoiDung" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.SanPham" Width="1.5" PointX="10.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.TinTuc" Width="1.5" PointX="10.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriEcommerceModel.VaiTro" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_TinTuc_ChuDe" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_SanPham_DanhMuc" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_DHCT_DonHang" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_DonHang_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_DHCT_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_SanPham_DonViTinh" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_GHCT_GioHang" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_GioHang_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_GHCT_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_NguoiDung_VaiTro" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_SanPham_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="AgriEcommerceModel.FK_TinTuc_NguoiDung" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

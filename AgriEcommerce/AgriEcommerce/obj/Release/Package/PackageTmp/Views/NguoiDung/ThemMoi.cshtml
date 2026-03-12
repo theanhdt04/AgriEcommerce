@@ -1,0 +1,138 @@
+﻿@model AgriEcommerce.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Thêm mới thông tin người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin người dùng</h2>
+}
+
+@section breadLink
+{
+    <a href="#">Thêm mới thông tin người dùng</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "NguoiDung", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h4 style="color:black">Nhập thông tin người dùng</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Mã người dùng <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.MaNguoiDung,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập mã người dùng...", maxlength = "20" } })
+
+                @Html.ValidationMessageFor(model => model.MaNguoiDung, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Họ tên <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.HoTen,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập họ tên...", maxlength = "150" } })
+
+                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Email <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Email,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập email...", type = "email" } })
+
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Mật khẩu <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+                @Html.PasswordFor(model => model.MatKhau,
+                    new { @class = "form-control", placeholder = "Nhập mật khẩu..." })
+
+                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Điện thoại:
+            </label>
+
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.DienThoai,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số điện thoại..." } })
+
+                @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Địa chỉ:
+            </label>
+
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.DiaChi,
+                    new { @class = "form-control", rows = 3, placeholder = "Nhập địa chỉ..." })
+
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Vai trò <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.MaVaiTro,
+                    (SelectList)ViewBag.VaiTro,
+                    "--- Chọn vai trò ---",
+                    new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.MaVaiTro, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-md-9 offset-md-2">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+                @Html.ActionLink("Trở lại", "danhsach", null,
+                    new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+
+    </div>
+}

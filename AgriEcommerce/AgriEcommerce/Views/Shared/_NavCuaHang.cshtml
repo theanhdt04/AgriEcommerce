@@ -1,0 +1,22 @@
+﻿@model IEnumerable<AgriEcommerce.Models.DanhMuc>
+
+<div class="col-lg-12">
+    <div class="mb-3">
+        <h4>Danh mục sản phẩm</h4>
+        <ul class="list-unstyled fruite-categorie">
+            <li>
+                <div class="d-flex justify-content-between fruite-name">
+                    <a href="/CuaHang/danhsach/"><i class="fa fa-bullseye" style="margin-right:7px"></i>Tất cả sản phẩm</a>
+                </div>
+            </li>
+            @foreach (var dm in Model)
+            {
+                <li>
+                    <div class="d-flex justify-content-between fruite-name">
+                        <a href="/CuaHang/danhsach?ma=@dm.MaDanhMuc"><i class="fa fa-bullseye" style="margin-right:7px"></i>@dm.TenDanhMuc</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

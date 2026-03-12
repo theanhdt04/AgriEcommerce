@@ -1,0 +1,95 @@
+﻿@model List<AgriEcommerce.Models.DonHang>
+
+@{
+    ViewBag.Title = "Đơn hàng của tôi";
+    Layout = "~/Views/Shared/_LayoutCuaHang.cshtml";
+}
+
+@section breadTitle
+{
+    <li class="breadcrumb-item active text-white">Đơn hàng</li>
+}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">Đơn hàng của tôi</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-success">
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th width="200"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <strong>#@item.MaDonHang</strong>
+                        </td>
+
+                        <td>
+                            @(item.NgayDat.HasValue ? item.NgayDat.Value.ToString("dd/MM/yyyy") : "")
+                        </td>
+
+                        <td>
+                            @(item.TongTien.HasValue ? item.TongTien.Value.ToString("N0") : "0") đ
+                        </td>
+
+                        <td>
+
+                            @if (item.TrangThai == "ChoXuLy")
+                            {
+                                <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                            }
+                            else if (item.TrangThai == "DangGiao")
+                            {
+                                <span class="badge bg-info">Đang giao</span>
+                            }
+                            else if (item.TrangThai == "HoanThanh")
+                            {
+                                <span class="badge bg-success">Hoàn thành</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Đã hủy</span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <a href="@Url.Action("ChiTietDonHang","DonHang", new { id = item.MaDonHang })"
+                               class="btn btn-success btn-sm">
+                                Xem chi tiết
+                            </a>
+
+                            @if (item.TrangThai == "ChoXuLy")
+                            {
+                                <a href="@Url.Action("HuyDonHang","DonHang",new { id = item.MaDonHang })"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
+                                    Hủy đơn
+                                </a>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

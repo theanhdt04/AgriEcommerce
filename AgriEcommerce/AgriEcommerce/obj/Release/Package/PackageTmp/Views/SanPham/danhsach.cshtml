@@ -1,0 +1,178 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<AgriEcommerce.Models.SanPham>
+
+@{
+    ViewBag.Title = "Quản lý thông tin sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight:bold; color:black">Quản lý thông tin sản phẩm</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Danh sách thông tin sản phẩm</a>
+}
+
+@using (Html.BeginForm("danhsach", "SanPham", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm">
+        <legend class="w-auto px-2" style="font-weight:bold; color:black">Nhập thông tin tìm kiếm</legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label" style="font-weight:bold; color:black">Từ khóa:</label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa"
+                       value="@ViewBag.tuKhoa"
+                       class="form-control"
+                       placeholder="Nhập từ khóa..." />
+            </div>
+
+            <label class="col-md-1 col-form-label" style="font-weight: bold; color: black">Chủ đề:</label>
+            <div class="col-md-3">
+                @Html.DropDownList("maDanhMuc",
+                                   (SelectList)ViewBag.DanhMuc,
+                                   "---Chọn danh mục---",
+                                   new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit" name="btnTimKiem"
+                       class="btn btn-primary me-2"
+                       value="Tìm kiếm"
+                       style="margin-right:10px" />
+                <a href="@Url.Action("danhsach","SanPham")"
+                   class="btn btn-secondary">
+                    Làm mới
+                </a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("Thêm mới", "ThemMoi", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped" id="dataTable" width="100%">
+    <tr style="text-align:center; color:black">
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Mã sản phẩm
+        </th>
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Giá
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Mô tả
+        </th>        
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Ngày cập nhật
+        </th>
+        <th style="width:90px">
+            Thao tác
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:center">
+                <img src="~/Content/images/@item.HinhAnh" width="90" height="120" class="img-thumbnail" />
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.MaSanPham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSanPham)
+            </td>
+            <td style="text-align:center">
+                @String.Format("{0:N0} đ", item.Gia)
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>            
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.NgayTao)
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.NgayCapNhat)
+            </td>
+            <td style="text-align:center">
+                @Html.ActionLink("Sửa", "SuaThongTin", new { maSanPham = item.MaSanPham }, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("Xoá", "XoaThongTin", new { maSanPham = item.MaSanPham }, new { @class = "btn btn-danger btn-sm", @onclick = "return confirm('Bạn có chắc chắn muốn xoá thông tin này?')" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-4">
+
+        @if (Model.HasPreviousPage)
+        {
+            <a href="@Url.Action("danhsach", new { page = Model.PageNumber - 1, tuKhoa = ViewBag.TuKhoa, maDanhMuc = ViewBag.MaDanhMuc })" class="rounded">&laquo;</a>
+        }
+
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <a class="active rounded">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("danhsach", new { page = i, tuKhoa = ViewBag.TuKhoa, maDanhMuc = ViewBag.MaDanhMuc })" class="rounded">@i</a>
+            }
+        }
+
+        @if (Model.HasNextPage)
+        {
+            <a href="@Url.Action("danhsach", new { page = Model.PageNumber + 1, tuKhoa = ViewBag.TuKhoa, maDanhMuc = ViewBag.MaDanhMuc })" class="rounded">&raquo;</a>
+        }
+
+    </div>
+</div>
+
+<style>
+    .pagination a {
+        color: #4e73df;
+        padding: 8px 14px;
+        margin: 5px;
+        border: 1px solid #4e73df;
+        text-decoration: none;
+        transition: 0.3s;
+        background: #fff;
+    }
+
+        .pagination a:hover {
+            background: #4e73df;
+            color: #fff;
+        }
+
+        .pagination a.active {
+            background: #4e73df;
+            color: #fff;
+            border-color: #4e73df;
+        }
+
+        .pagination a.rounded {
+            border-radius: 8px;
+        }
+</style>

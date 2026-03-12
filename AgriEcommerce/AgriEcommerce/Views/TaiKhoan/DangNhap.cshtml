@@ -1,0 +1,108 @@
+﻿@model AgriEcommerce.Models.NguoiDung
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="~/Content/images/logocuahang.png" />
+    <title>Đăng nhập tài khoản</title>
+    <link href="~/Content/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="~/Content/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Chào mừng bạn đã quay trở lại!</h1>
+                                    </div>
+                                    @using (Html.BeginForm("DangNhap", "TaiKhoan", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "user" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.Email, new
+                                            { @class = "form-control form-control-user", placeholder = "Nhập địa chỉ email...", type = "email", style = "color:black", required = "required" })
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.PasswordFor(m => m.MatKhau, new
+                                            { @class = "form-control form-control-user", placeholder = "Mật khẩu", style = "color:black", required = "required" })
+                                        </div>
+
+                                        if (ViewBag.ThongBao != null)
+                                        {
+                                            <div class="text-danger small mb-2" style="margin-left:20px">
+                                                @ViewBag.ThongBao
+                                            </div>
+                                        }
+
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">
+                                                    Ghi nhớ đăng nhập
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Đăng nhập
+                                        </button>
+                                        <hr>
+                                        <a href="#" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Đăng nhập bằng Google
+                                        </a>
+                                        <a href="#" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Đăng nhập bằng Facebook
+                                        </a>
+                                    }
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="/TaiKhoan/QuenMatKhau/">Quên mật khẩu?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="/TaiKhoan/DangKy/">Tạo tài khoản mới!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["DangKyThanhCong"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Đăng ký thành công!',
+                text: 'Bạn có thể đăng nhập ngay bây giờ',
+                confirmButtonColor: '#4e73df',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    }
+
+    <!-- JS -->
+    <script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Content/Admin/js/sb-admin-2.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<AgriEcommerce.Models.DonHang>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight:bold; color:black">Quản lý thông tin đơn hàng</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Danh sách thông tin đơn hàng</a>
+}
+
+<div class="container py-4">
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-success">
+            <tr style="text-align:center">
+
+                <th>Mã đơn hàng</th>
+                <th>Mã khách</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr style="text-align:center">
+
+                    <td>#@item.MaDonHang</td>
+
+                    <td>@item.MaNguoiDung</td>
+
+                    <td>@item.NgayDat.Value.ToString("dd/MM/yyyy")</td>
+
+                    <td>@item.TongTien.Value.ToString("N0") đ</td>
+
+                    <td>
+
+                        @if (item.TrangThai == "ChoXuLy")
+                        {
+                            <span class="badge bg-warning">Chờ xử lý</span>
+                        }
+                        else if (item.TrangThai == "DangGiao")
+                        {
+                            <span class="badge bg-info">Đang giao</span>
+                        }
+                        else if (item.TrangThai == "HoanThanh")
+                        {
+                            <span class="badge bg-success">Hoàn thành</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Đã hủy</span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <a href="@Url.Action("ChiTiet","AdminDonHang", new { id = item.MaDonHang })"
+                           class="btn btn-primary btn-sm">
+                            Chi tiết
+                        </a>
+
+                        @if (item.TrangThai == "ChoXuLy")
+                        {
+                            <a href="@Url.Action("DuyetDon","AdminDonHang", new { id = item.MaDonHang })"
+                               class="btn btn-success btn-sm">
+                                Duyệt
+                            </a>
+
+                            <a href="@Url.Action("HuyDon","AdminDonHang", new { id = item.MaDonHang })"
+                               class="btn btn-danger btn-sm">
+                                Hủy
+                            </a>
+                        }
+
+                        @if (item.TrangThai == "DangGiao")
+                        {
+                            <a href="@Url.Action("HoanThanh","AdminDonHang", new { id = item.MaDonHang })"
+                               class="btn btn-warning btn-sm">
+                                Hoàn thành
+                            </a>
+                        }
+
+                        <a href="@Url.Action("XoaDonHang","AdminDonHang", new { id = item.MaDonHang })"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bạn có chắc muốn xoá đơn hàng này?');">
+                            Xóa
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-4">
+
+        @if (Model.HasPreviousPage)
+        {
+            <a href="@Url.Action("Danhsach", new { page = Model.PageNumber - 1 })" class="rounded">&laquo;</a>
+        }
+
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <a class="active rounded">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Danhsach", new { page = i })" class="rounded">@i</a>
+            }
+        }
+
+        @if (Model.HasNextPage)
+        {
+            <a href="@Url.Action("Danhsach", new { page = Model.PageNumber + 1 })" class="rounded">&raquo;</a>
+        }
+
+    </div>
+</div>
+
+<style>
+    .pagination a {
+        color: #555;
+        padding: 9px 16px; /* tăng kích thước nút */
+        margin: 0 6px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 15px; /* chữ to hơn */
+    }
+
+        .pagination a:hover {
+            background-color: #4e73df;
+            color: white;
+            border-color: #4e73df;
+        }
+
+        .pagination a.active {
+            background-color: #4e73df;
+            color: white;
+            border-color: #4e73df;
+            font-weight: bold;
+        }
+
+    .pagination {
+        gap: 4px;
+    }
+
+        .pagination a.rounded {
+            border-radius: 6px; /* bo góc nhẹ */
+        }
+</style>

@@ -1,0 +1,90 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<AgriEcommerce.Models.SanPham>
+
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_AgriEcommerce.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="rounded position-relative fruite-item">
+            <div class="fruite-img">
+                <a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham">
+                    <img src="~/Content/images/@item.HinhAnh" class="img-fluid w-100 rounded-top" style="height:220px; object-fit:cover;" alt="">
+                </a>
+            </div>
+            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.DanhMuc.TenDanhMuc</div>
+            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                <h4><a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham">@item.TenSanPham</a></h4>
+                <p>@item.MoTa</p>
+                <div class="d-flex flex-column align-items-center gap-2">
+
+                    <p class="text-danger fs-5 fw-bold mb-0 text-center">
+                        Giá: @String.Format("{0:N0}", item.Gia) đ / @item.DonViTinh.TenDonViTinh
+                    </p>
+
+                    <div class="d-flex gap-2">
+                        @if (item.SoLuong > 0)
+                        {
+                            <a href="@Url.Action("ThemGioHang","GioHang", new { id = item.MaSanPham })"
+                               class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2"></i> Đưa vào giỏ
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn border border-secondary rounded-pill px-3 text-danger" disabled>
+                                <i class="fa fa-times me-2"></i> Hết hàng
+                            </button>
+                        }
+                        <a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham" class="btn border border-secondary rounded-pill px-3 text-primary">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-5">
+        <!-- Trang trước -->
+        @if (Model.HasPreviousPage)
+        {
+            <a href="@Url.Action("danhsach", new { page = Model.PageNumber - 1, ma = ViewBag.Ma })" class="rounded">&laquo;</a>
+        }
+        <!-- Danh sách trang -->
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <a class="active rounded">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("danhsach", new { page = i, ma = ViewBag.Ma })" class="rounded">@i</a>
+            }
+        }
+        <!-- Trang sau -->
+        @if (Model.HasNextPage)
+        {
+            <a href="@Url.Action("danhsach", new { page = Model.PageNumber + 1, ma = ViewBag.Ma })" class="rounded">&raquo;</a>
+        }
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '@TempData["Success"]',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    </script>
+}

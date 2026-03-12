@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AgriEcommerce.Models.NguoiDung>
+
+@{
+    ViewBag.Title = "Quản lý thông tin người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin người dùng</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Danh sách thông tin người dùng</a>
+}
+
+<p style="text-align:right">
+    @Html.ActionLink("Thêm mới", "ThemMoi", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped" id="dataTable">
+    <tr style="text-align:center; color:black">
+        <th>
+            Mã người dùng
+        </th>
+        <th>
+            Họ tên
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Điện thoại
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Ngày cập nhật
+        </th>
+        <th style="width:90px">
+            Thao tác
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="text-align:center">
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DienThoai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayCapNhat)
+            </td>
+            <td style="text-align:center">
+                @Html.ActionLink("Sửa", "SuaThongTin", new { maNguoiDung = item.MaNguoiDung }, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("Xoá", "XoaThongTin", new { maNguoiDung = item.MaNguoiDung }, new { @class = "btn btn-danger btn-sm", @onclick = "return confirm('Bạn có chắc chắn muốn xoá thông tin này?')" })
+            </td>
+        </tr>
+    }
+
+</table>

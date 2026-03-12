@@ -1,0 +1,97 @@
+﻿@model AgriEcommerce.Models.DonViTinh
+
+@{
+    ViewBag.Title = "Cập nhật thông tin đơn vị tính";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin đơn vị tính</h2>
+}
+
+@section breadLink
+{
+    <a href="#">Cập nhật thông tin đơn vị tính</a>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h4>Nhập thông tin đơn vị tính</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group row mb-3">
+
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Mã đơn vị tính <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+
+                @Html.EditorFor(model => model.MaDonViTinh,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Mã đơn vị tính...", maxlength = "20", @readonly = "readonly" } })
+
+                @Html.ValidationMessageFor(model => model.MaDonViTinh, "", new { @class = "text-danger small" })
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group row mb-3">
+
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Tên đơn vị tính <span class="text-danger">(*)</span>:
+            </label>
+
+            <div class="col-md-9">
+
+                @Html.EditorFor(model => model.TenDonViTinh,
+                    new { htmlAttributes = new { @class = "form-control", placeholder = "Tên đơn vị tính...", maxlength = "100" } })
+
+                @Html.ValidationMessageFor(model => model.TenDonViTinh, "", new { @class = "text-danger small" })
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group row mb-3">
+
+            <label class="col-md-2 col-form-label text-end fw-semibold" style="color:black;">
+                Mô tả:
+            </label>
+
+            <div class="col-md-9">
+
+                @Html.TextAreaFor(model => model.MoTa,
+                    new { @class = "form-control", rows = 4, placeholder = "Mô tả đơn vị tính...", maxlength = "150" })
+
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger small" })
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+
+                @Html.ActionLink("Trở lại", "DanhSach", null,
+                    new { @class = "btn btn-secondary" })
+
+            </div>
+
+        </div>
+
+    </div>
+}

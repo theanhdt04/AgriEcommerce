@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Đặt Hàng Thành Công";
+    Layout = "~/Views/Shared/_LayoutCuaHang.cshtml";
+}
+
+@section breadTitle
+{
+    <li class="breadcrumb-item active text-white">Đơn hàng</li>
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+
+            <div class="card shadow-lg border-0 p-5">
+
+                <!-- Icon thành công -->
+                <div class="mb-4">
+                    <i class="fa fa-check-circle" style="font-size:80px; color:#81c408"></i>
+                </div>
+
+                <!-- Tiêu đề -->
+                <h2 class="fw-bold mb-3" style="color:#81c408">
+                    ĐẶT HÀNG THÀNH CÔNG!
+                </h2>
+
+                <!-- Nội dung -->
+                <p class="text-muted fs-5">
+                    Cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi 🌿
+                </p>
+
+                <p class="text-muted">
+                    Đơn hàng của bạn đang được xử lý và sẽ sớm được giao đến bạn.
+                </p>
+
+                <hr class="my-4" />
+
+                <!-- Nút hành động -->
+                <div class="d-flex justify-content-center gap-3">
+
+                    <a href="@Url.Action("danhsach", "CuaHang")"
+                       class="btn px-4 py-2 btn-custom">
+                        🛒 Tiếp tục mua sắm
+                    </a>
+
+                    <a href="@Url.Action("LichSuDonHang", "DonHang")"
+                       class="btn px-4 py-2 btn-outline-custom">
+                        📦 Xem đơn hàng
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f4fff6;
+    }
+
+    .btn-custom {
+        background-color: #81c408;
+        color: white;
+        border: none;
+    }
+
+        .btn-custom:hover {
+            background-color: #6da805;
+            color: white;
+        }
+
+    .btn-outline-custom {
+        border: 2px solid #81c408;
+        color: #81c408;
+    }
+
+        .btn-outline-custom:hover {
+            background: #81c408;
+            color: white;
+        }
+</style>

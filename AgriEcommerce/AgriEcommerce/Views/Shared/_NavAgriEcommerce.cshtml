@@ -1,0 +1,17 @@
+﻿@model IEnumerable<AgriEcommerce.Models.DanhMuc>
+
+<div class="col-lg-4 text-start">
+    <h1><a href="/TrangChu/danhsach">Tất cả sản phẩm</a></h1>
+</div>
+<div class="col-lg-8 text-end">
+    <ul class="nav nav-pills d-inline-flex text-center mb-5">
+        @foreach (var dm in Model)
+        {
+            <li class="nav-item">
+                <a class="d-flex m-2 py-2 bg-light rounded-pill active" href="/TrangChu/danhsach?ma=@dm.MaDanhMuc">
+                    <span class="text-dark" style="width: 150px;">@dm.TenDanhMuc</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

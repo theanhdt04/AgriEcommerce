@@ -1,0 +1,106 @@
+﻿@model List<AgriEcommerce.Models.DonHangChiTiet>
+
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var donHang = ViewBag.DonHang as AgriEcommerce.Models.DonHang;
+    decimal tongTien = 0;
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight:bold; color:black">Quản lý thông tin đơn hàng</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Chi tiết thông tin đơn hàng</a>
+}
+
+<div class="container py-4">
+
+    <p><strong>Mã đơn hàng:</strong> #@donHang.MaDonHang</p>
+
+    <p><strong>Khách hàng:</strong> @donHang.MaNguoiDung</p>
+
+    <p><strong>Họ tên người nhận:</strong> @donHang.HoTenNguoiNhan</p>
+
+    <p><strong>Số điện thoại:</strong> @donHang.DienThoai</p>
+
+    <p><strong>Địa chỉ giao hàng:</strong> @donHang.DiaChiGiaoHang</p>
+
+    @if (!string.IsNullOrEmpty(donHang.GhiChu))
+    {
+        <p><strong>Ghi chú:</strong> @donHang.GhiChu</p>
+    }
+
+    <p>
+        <strong>Trạng thái đơn:</strong>
+        <span class="badge bg-warning text-dark">
+            @donHang.TrangThai
+        </span>
+    </p>
+
+    <p><strong>Ngày đặt:</strong> @donHang.NgayDat</p>
+
+    <hr />
+
+    <h4>Danh sách sản phẩm</h4>
+
+    <table class="table table-bordered">
+
+        <thead class="table-success">
+
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                decimal thanhTien = item.SoLuong.Value * item.DonGia.Value;
+                tongTien += thanhTien;
+
+                <tr>
+
+                    <td>@item.SanPham.TenSanPham</td>
+
+                    <td>@item.DonGia.Value.ToString("N0") đ</td>
+
+                    <td>@item.SoLuong</td>
+
+                    <td>@thanhTien.ToString("N0") đ</td>
+
+                </tr>
+            }
+
+            <tr>
+
+                <td colspan="3">
+                    <strong>Tổng tiền</strong>
+                </td>
+
+                <td>
+                    <strong>@tongTien.ToString("N0") đ</strong>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <a href="@Url.Action("DanhSach","AdminDonHang")"
+       class="btn btn-success">
+        Quay lại
+    </a>
+
+</div>

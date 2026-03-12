@@ -1,0 +1,237 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<AgriEcommerce.Models.SanPham>
+
+@{
+    ViewBag.Title = "danhsach";
+    Layout = "~/Views/Shared/_LayoutCuaHang.cshtml";
+}
+
+@section breadTitle
+{
+    <li class="breadcrumb-item active text-white">Cửa hàng</li>
+}
+
+<div class="container-fluid fruite py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="mb-0"><a href="/CuaHang/danhsach/">Cửa hàng nông sản sạch</a></h1>
+
+                    <!-- Ô tìm kiếm -->
+                    @using (Html.BeginForm("danhsach", "CuaHang", FormMethod.Get))
+                    {
+                        <div style="width:350px;">
+                            <div class="input-group">
+                                <input type="search"
+                                       name="tuKhoa"
+                                       value="@ViewBag.tuKhoa"
+                                       class="form-control p-3"
+                                       placeholder="Tìm kiếm sản phẩm..."
+                                       aria-describedby="search-icon-1">
+
+                                <button type="submit" id="search-icon-1" class="input-group-text p-3">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+
+                            @Html.Action("DanhMucTrangChu", "CuaHang")
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4 class="mb-2">Giá</h4>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Danh mục khác</h4>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                        <label for="Categories-1"> Nông sản hữu cơ</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                        <label for="Categories-2"> Rau củ tươi</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                                        <label for="Categories-3"> Bán chạy</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
+                                        <label for="Categories-4"> Giảm giá</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
+                                        <label for="Categories-5"> Sắp hết hạn</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 class="mb-3">Sản phẩm nổi bật</h4>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="~/Content/Home/img/featur-1.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Táo đỏ nhập khẩu</h6>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="~/Content/Home/img/featur-2.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Dâu tây Đà Lạt</h6>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="~/Content/Home/img/featur-3.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Súp lơ xanh</h6>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center my-4">
+                                    <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Xem thêm</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="position-relative">
+                                    <img src="~/Content/Home/img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                    <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                    <div class="rounded position-relative fruite-item">
+                                        <div class="fruite-img">
+                                            <a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham">
+                                                <img src="~/Content/images/@item.HinhAnh"
+                                                     class="img-fluid w-100 rounded-top"
+                                                     style="height:250px; object-fit:cover;"
+                                                     alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                             style="top: 10px; left: 10px;">
+                                            @item.DanhMuc.TenDanhMuc
+                                        </div>
+
+                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                            <h4 style="text-align:center">
+                                                <a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham">
+                                                    @item.TenSanPham
+                                                </a>
+                                            </h4>
+
+                                            <p style="text-align:center">@item.MoTa</p>
+
+                                            <p class="text-danger fs-5 fw-bold text-center mb-3">
+                                                Giá: @String.Format("{0:N0}", item.Gia) đ/ @item.DonViTinh.TenDonViTinh
+                                            </p>
+
+                                            <div class="d-flex justify-content-center gap-2">
+                                                @if (item.SoLuong > 0)
+                                                {
+                                                    <a href="@Url.Action("ThemGioHang","GioHang", new { id = item.MaSanPham })"
+                                                       class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-1 text-primary"></i> Đưa vào giỏ
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn border border-danger rounded-pill px-3 text-danger" disabled>
+                                                        <i class="fa fa-times me-1"></i> Hết hàng
+                                                    </button>
+                                                }
+                                                <a href="/CuaHang/ChiTietSanPham?ma=@item.MaSanPham"
+                                                   class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-12">
+                                <div class="pagination d-flex justify-content-center mt-5">
+
+                                    <!-- Trang trước -->
+                                    @if (Model.HasPreviousPage)
+                                    {
+                                        <a href="@Url.Action("DanhSach", new { page = Model.PageNumber - 1, tuKhoa = ViewBag.TuKhoa, ma = ViewBag.Ma })" class="rounded">&laquo;</a>
+                                    }
+
+                                    <!-- Danh sách trang -->
+                                    @for (int i = 1; i <= Model.PageCount; i++)
+                                    {
+                                        if (i == Model.PageNumber)
+                                        {
+                                            <a class="active rounded">@i</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("DanhSach", new { page = i, tuKhoa = ViewBag.TuKhoa, ma = ViewBag.Ma })" class="rounded">@i</a>
+                                        }
+                                    }
+
+                                    <!-- Trang sau -->
+                                    @if (Model.HasNextPage)
+                                    {
+                                        <a href="@Url.Action("DanhSach", new { page = Model.PageNumber + 1, tuKhoa = ViewBag.TuKhoa, ma = ViewBag.Ma })" class="rounded">&raquo;</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '@TempData["Success"]',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    </script>
+}
+

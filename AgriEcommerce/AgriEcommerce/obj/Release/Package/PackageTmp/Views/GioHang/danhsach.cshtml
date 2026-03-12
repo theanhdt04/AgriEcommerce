@@ -1,0 +1,194 @@
+﻿@model List<AgriEcommerce.Models.GioHangChiTiet>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutCuaHang.cshtml";
+    decimal tongTien = 0;
+}
+
+@section breadTitle
+{
+    <li class="breadcrumb-item active text-white">Giỏ hàng</li>
+}
+
+
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger mt-3">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Đơn vị tính</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th>Xử lý</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model == null || Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-danger">
+                                Giỏ hàng của bạn đang trống
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            decimal gia = item.Gia ?? 0;
+                            int soLuong = item.SoLuong ?? 0;
+                            decimal thanhTien = gia * soLuong;
+                            tongTien += thanhTien;
+
+                <tr>
+                    <!-- Hình ảnh -->
+                    <th scope="row">
+                        <div class="d-flex align-items-center">
+                            <img src="@Url.Content("~/Content/images/" + item.SanPham.HinhAnh)"
+                                 class="img-fluid me-5 rounded-circle"
+                                 style="width: 80px; height: 80px; object-fit:cover;" />
+                        </div>
+                    </th>
+
+                    <!-- Tên -->
+                    <td>
+                        <p class="mb-0 mt-4">
+                            @item.SanPham.TenSanPham
+                        </p>
+                    </td>
+
+                    <!-- Giá -->
+                    <td>
+                        <p class="mb-0 mt-4">
+                            @String.Format("{0:N0}", gia) đ
+                        </p>
+                    </td>
+
+                    <!-- Đơn vị tính -->
+                    <td>
+                        <p class="mb-0 mt-4">
+                            @item.SanPham.DonViTinh.TenDonViTinh
+                        </p>
+                    </td>
+
+                    <!-- Số lượng -->
+                    <td>
+                        @using (Html.BeginForm("CapNhat", "GioHang", FormMethod.Post))
+                        {
+                            <input type="hidden" name="maChiTiet" value="@item.MaChiTiet" />
+
+                            <div class="d-flex align-items-center gap-2 mt-3">
+
+                                <div class="input-group" style="width:150px;">
+                                    <input type="number"
+                                           name="soLuong"
+                                           value="@soLuong"
+                                           min="1"
+                                           step="1"
+                                           class="form-control text-center" />
+
+                                    <button type="submit" class="btn btn-primary btn-sm" style="color:white">
+                                        Cập nhật
+                                    </button>
+                                </div>
+
+                                <span style="color:#e74c3c;font-weight:600;white-space:nowrap;">
+                                    Còn: @item.SanPham.SoLuong
+                                </span>
+
+                            </div>
+                        }
+                    </td>
+
+                    <!-- Thành tiền -->
+                    <td>
+                        <p class="mb-0 mt-4 text-danger fw-bold">
+                            @String.Format("{0:N0}", thanhTien) đ
+                        </p>
+                    </td>
+
+                    <!-- Xóa -->
+                    <td>
+                        @using (Html.BeginForm("Xoa", "GioHang", FormMethod.Post))
+                        {
+                            <input type="hidden" name="id" value="@item.MaChiTiet" />
+
+                            <button type="submit"
+                                    class="btn btn-md rounded-circle bg-light border mt-4"
+                                    onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+                                <i class="fa fa-times text-danger"></i>
+                            </button>
+                        }
+                    </td>
+                </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- Tổng tiền -->
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row g-4 justify-content-end">
+                <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                    <div class="bg-light rounded">
+
+                        <div class="p-4">
+                            <h4 class="mb-4">Tổng thanh toán</h4>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6 class="mb-0">Tạm tính:</h6>
+                                <p class="mb-0">
+                                    @String.Format("{0:N0}", tongTien) đ
+                                </p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <h6 class="mb-0">Giảm giá:</h6>
+                                <p class="mb-0">0 đ</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <h6 class="mb-0">Phí vận chuyển:</h6>
+                                <p class="mb-0">0 đ</p>
+                            </div>
+                        </div>
+
+                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                            <h5 class="mb-0 ps-4 me-4">Tổng cộng</h5>
+                            <p class="mb-0 pe-4 text-danger fw-bold">
+                                @String.Format("{0:N0}", tongTien) đ
+                            </p>
+                        </div>
+
+                        <a href="@Url.Action("ThanhToan", "DonHang")"
+                           class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">
+                            Tiến hành thanh toán
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

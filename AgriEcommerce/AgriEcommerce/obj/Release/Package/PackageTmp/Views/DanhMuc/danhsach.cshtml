@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AgriEcommerce.Models.DanhMuc>
+
+@{
+    ViewBag.Title = "Quản lý thông tin danh mục sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin danh mục sản phẩm</h2>
+
+}
+
+@section breadLink
+{
+    <a href="#">Danh sách thông tin danh mục sản phẩm</a>
+}
+
+<p style="text-align:right">
+    @Html.ActionLink("Thêm mới", "ThemMoi", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped" id="dataTable" width="100%">
+    <tr style="text-align:center; color:black">
+        <th>
+            Mã danh mục
+        </th>
+        <th>
+            Tên danh mục
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Ngày cập nhật
+        </th>
+        <th style="width:90px">
+            Thao tác
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.MaDanhMuc)
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.TenDanhMuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.NgayTao)
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.NgayCapNhat)
+            </td>
+            <td style="text-align:center">
+                @Html.ActionLink("Sửa", "SuaThongTin", new { maDanhMuc = item.MaDanhMuc }, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("Xoá", "XoaThongTin", new { maDanhMuc = item.MaDanhMuc }, new { @class = "btn btn-danger btn-sm", @onclick = "return confirm('Bạn có chắc chắn muốn xoá thông tin này?')" })
+            </td>
+        </tr>
+    }
+
+</table>

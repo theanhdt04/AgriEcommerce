@@ -1,0 +1,121 @@
+﻿@model List<AgriEcommerce.Models.DonHangChiTiet>
+
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutCuaHang.cshtml";
+
+    var donHang = ViewBag.DonHang as AgriEcommerce.Models.DonHang;
+    decimal tongTien = 0;
+}
+
+@section breadTitle
+{
+    <li class="breadcrumb-item active text-white">Chi tiết đơn hàng</li>
+}
+
+<div class="container py-5">
+
+    <h2 class="mb-4 text-success">Chi tiết đơn hàng</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <p>
+                <strong>Mã đơn hàng:</strong> #@donHang.MaDonHang
+            </p>
+
+            <p>
+                <strong>Ngày đặt:</strong>
+                @donHang.NgayDat.Value.ToString("dd/MM/yyyy")
+            </p>
+
+            <p>
+                <strong>Họ tên người nhận:</strong>
+                @donHang.HoTenNguoiNhan
+            </p>
+
+            <p>
+                <strong>Số điện thoại:</strong>
+                @donHang.DienThoai
+            </p>
+
+            <p>
+                <strong>Địa chỉ giao hàng:</strong>
+                @donHang.DiaChiGiaoHang
+            </p>
+
+            @if (!string.IsNullOrEmpty(donHang.GhiChu))
+            {
+                <p>
+                    <strong>Ghi chú:</strong>
+                    @donHang.GhiChu
+                </p>
+            }
+
+            <p>
+                <strong>Trạng thái:</strong>
+
+                <span class="badge bg-warning text-dark">
+                    @donHang.TrangThai
+                </span>
+            </p>
+
+        </div>
+    </div>
+
+
+    <table class="table table-bordered">
+
+        <thead class="table-success">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                decimal thanhTien = item.SoLuong.Value * item.DonGia.Value;
+                tongTien += thanhTien;
+
+                <tr>
+
+                    <td>@item.SanPham.TenSanPham</td>
+
+                    <td>@item.DonGia.Value.ToString("N0") đ</td>
+
+                    <td>@item.SoLuong</td>
+
+                    <td>@thanhTien.ToString("N0") đ</td>
+
+                </tr>
+            }
+
+            <tr>
+                <td colspan="3" class="text-end">
+                    <strong>Tổng tiền</strong>
+                </td>
+
+                <td>
+                    <strong class="text-danger">
+                        @tongTien.ToString("N0") đ
+                    </strong>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="mt-4">
+        <a href="@Url.Action("LichSuDonHang","DonHang")"
+           class="btn btn-success">
+            Quay lại đơn hàng
+        </a>
+    </div>
+</div>

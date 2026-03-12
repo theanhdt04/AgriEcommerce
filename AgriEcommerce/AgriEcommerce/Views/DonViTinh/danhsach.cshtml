@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AgriEcommerce.Models.DonViTinh>
+
+@{
+    ViewBag.Title = "Quản lý thông tin đơn vị tính";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle
+{
+    <h2 style="font-weight: bold; color: black">Quản lý thông tin đơn vị tính</h2>
+}
+
+@section breadLink
+{
+    <a href="#">Danh sách đơn vị tính</a>
+}
+
+<p style="text-align:right">
+    @Html.ActionLink("Thêm mới", "ThemMoi", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped" id="dataTable" width="100%">
+    <tr style="text-align:center; color:black">
+        <th>
+            Mã đơn vị tính
+        </th>
+        <th>
+            Tên đơn vị tính
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Thao tác
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="text-align:center">
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDonViTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDonViTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+
+            <td>
+                @Html.ActionLink("Sửa", "SuaThongTin",
+                    new { maDonViTinh = item.MaDonViTinh },
+                    new { @class = "btn btn-success btn-sm" })
+
+                @Html.ActionLink("Xoá", "XoaThongTin",
+                    new { maDonViTinh = item.MaDonViTinh },
+                    new { @class = "btn btn-danger btn-sm", @onclick = "return confirm('Bạn có chắc chắn muốn xoá thông tin này?')" })
+            </td>
+        </tr>
+    }
+
+</table>
